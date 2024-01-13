@@ -1,0 +1,9 @@
+azure-storage-blob==12.19.0
+python-dotenv==1.0.0
+fastavro==1.9.3
+tqdm==4.62.3
+numpy==1.26.3
+azure-ai-ml==1.12.1
+pandas==2.1.4
+azureml-core==1.54.0.post1
+pyarrow==14.0.2
