@@ -34,6 +34,9 @@ import pandas as pd
 # Tempdir 
 import tempfile
 
+# Importing logging 
+import logging
+
 def extract_features(record: dict) -> dict:
     """
     Creates the features used for the aggregation
@@ -115,9 +118,15 @@ def main(delta_hours: Union[int, None]) -> None:
 
         # Extracting the container client
         container_client = blob_service_client.get_container_client(container_name)
+
+        # Printing that the connection was successfull
+        logging.info("The connection was successfull")
+
+        # Raising the connection success flag
+        connection_success = True
     except: 
         # Printing that the connection was not successfull 
-        print("The connection was not successfull")
+        logging.warn("The connection was not successfull")
 
         # Raising an error
         connection_success = False
@@ -136,6 +145,9 @@ def main(delta_hours: Union[int, None]) -> None:
 
     # Creating an empty list to store the aggregated features
     aggregated_features = []
+
+    # Logging the number of blobs 
+    logging.info(f"There are {len(delta_blob_names)} blobs to aggregate")
 
     # Iterating over the delta blob names and extracting the features
     for blob_name in tqdm(delta_blob_names, desc="Extracting the features"):
@@ -173,6 +185,12 @@ def main(delta_hours: Union[int, None]) -> None:
 
         # Uploading the parquet file to the blob storage
         container_client.upload_blob(name=feature_blob_name, data=open(os.path.join(temp_dir, "aggregated_features.parquet"), "rb"))
+
+    # Logging a successfull run 
+    logging.info("The aggregation was successfull")
+
+    # Returning
+    return 
 
 if __name__ == '__main__': 
     # Creating the argument parser
