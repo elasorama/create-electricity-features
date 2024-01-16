@@ -1,4 +1,5 @@
 electricity-features-env/
 __pycache__/
 .env
-.vscode/
+
+.python_packages
