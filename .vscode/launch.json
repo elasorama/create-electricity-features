@@ -8,8 +8,10 @@
             "name": "Aggregate features",
             "type": "python",
             "request": "launch",
-            "module": "src.aggregate_features",
-            "justMyCode": true
+            "module": "aggregate_features",
+            "justMyCode": true,
+            //optional argument delta_hours
+            "args": ["--delta_hours", "24"],
         },
         {
             "name": "Attach to Python Functions",

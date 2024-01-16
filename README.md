@@ -29,7 +29,7 @@ The features are aggregated using the `aggregate_features.py` script. The script
 To run the feature aggregation, run the command: 
 
 ```
-pythona -m src.aggregate_features --delta_hours 24
+pythona -m aggregate_features --delta_hours 24
 ```
 
 # Container 

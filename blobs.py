@@ -45,8 +45,15 @@ def get_delta_blobs(blob_names: list, delta_hours: Union[int, None]) -> list:
 
     # Iterating over the blob names and extracting the ones that are within the delta hours
     for blob_name in blob_names:
-        # Extracting the blob date
-        blob_date = datetime.datetime.strptime(blob_name.split("/")[-8], "%Y-%m-%d")
+        # Creating the date for the blob 
+        blob_date = blob_name.split('/')
+        year = int(blob_date[3])
+        month = int(blob_date[4])
+        day = int(blob_date[5])
+        hour = int(blob_date[6])
+        minute = int(blob_date[7])
+        second = int(blob_date[8].split(".")[0])
+        blob_date = datetime.datetime(year, month, day, hour, minute, second)
 
         # Calculating the difference in hours
         delta = current_date - blob_date

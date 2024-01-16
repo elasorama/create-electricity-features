@@ -197,7 +197,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Aggregate the features from the raw streaming data")
 
     # Adding the arguments to the parser
-    parser.add_argument("--delta_hours", type=Union[int, None], help="The number of hours to look back in time to aggregate the features", default=None)
+    parser.add_argument("--delta_hours", type=int, help="The number of hours to look back in time to aggregate the features", default=None)
 
     # Parsing the arguments
     args = parser.parse_args()
