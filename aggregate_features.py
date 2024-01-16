@@ -106,12 +106,25 @@ def main(delta_hours: Union[int, None]) -> None:
     # Extrating the aggregated feature path 
     aggregated_feature_path = os.getenv("AZURE_ML_DATASET_PATH")
 
-    # Creating the blob service client
-    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+    # Initial placeholder whether the connection was successfull 
+    connection_success = False
 
-    # Extracting the container client
-    container_client = blob_service_client.get_container_client(container_name)
+    try:
+        # Creating the blob service client
+        blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 
+        # Extracting the container client
+        container_client = blob_service_client.get_container_client(container_name)
+    except: 
+        # Printing that the connection was not successfull 
+        print("The connection was not successfull")
+
+        # Raising an error
+        connection_success = False
+
+    if not connection_success:
+        return 
+    
     # Listing all the blobs in the container; The blobs should be created in the past 24 hours
     blobs = container_client.list_blobs(name_starts_with="flexitricity/")
 
