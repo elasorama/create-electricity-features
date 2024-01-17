@@ -171,12 +171,21 @@ def main(delta_hours: Union[int, None]) -> None:
     # Converting to a parquet file
     aggregated_features = pd.DataFrame(aggregated_features)
 
-    # Listing all the blobs with the name aggregated_feature_path
-    blobs = container_client.list_blobs(name_starts_with=f"{aggregated_feature_path}/")
-    blob_names = get_blob_names(blobs)
+    # Aggregating by year, month, day, hour, minute and calculating the mean of the power_usage, voltage and current
+    variables = ["power_usage", "voltage", "current"]
+    aggregated_features = aggregated_features.groupby(["year", "month", "day", "hour", "minute"], as_index=False)[variables].mean()
+
+    # Creating the name for the blob for upload
+    # The name will start with the min year, month, day, hour and minute and end with the max year, month, day, hour and minute
+    min_date = aggregated_features[["year", "month", "day", "hour", "minute"]].min().values
+    max_date = aggregated_features[["year", "month", "day", "hour", "minute"]].max().values
+
+    # Converting to string 
+    min_date = '-'.join([str(x) for x in min_date])
+    max_date = '-'.join([str(x) for x in max_date])
 
     # Creating the name for the blob for upload 
-    feature_blob_name = f"{aggregated_feature_path}/aggregated_features_{len(blob_names) + 1}.parquet"
+    feature_blob_name = f"{aggregated_feature_path}/{min_date}_{max_date}.parquet"
 
     # Creating a temporary directory
     with tempfile.TemporaryDirectory() as temp_dir:
