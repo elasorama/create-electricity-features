@@ -58,7 +58,21 @@ def extract_features(record: dict) -> dict:
     body = eval(body.decode("utf-8"))
 
     # Converting the timestamp to a datetime object
-    timestamp = datetime.datetime.strptime(body["timestamp"], "%Y-%m-%d %H:%M:%S.%f")
+    try:
+        timestamp = datetime.datetime.strptime(body["timestamp"], "%Y-%m-%d %H:%M:%S.%f")
+    except Exception as e: 
+        # Logging the error
+        logging.warning(f"Could not convert the timestamp to a datetime object: {e}; Trying pandas to_datetime")
+
+        # Converting to a datetime object
+        try:
+            timestamp = pd.to_datetime(body["timestamp"])
+        except Exception as e:
+            # Logging the error
+            logging.warning(f"Could not convert the timestamp to a datetime object: {e}; Returning an empty dictionary")
+
+            # Returning an empty dictionary
+            return {}
 
     # Extracting the features
     year = timestamp.year
