@@ -189,14 +189,20 @@ def main(delta_hours: Union[int, None]) -> None:
     variables = ["power_usage", "voltage", "current"]
     aggregated_features = aggregated_features.groupby(["year", "month", "day", "hour", "minute"], as_index=False)[variables].mean()
 
+    # Creating a date column 
+    aggregated_features["date"] = pd.to_datetime(aggregated_features[["year", "month", "day", "hour", "minute"]])
+
     # Creating the name for the blob for upload
     # The name will start with the min year, month, day, hour and minute and end with the max year, month, day, hour and minute
-    min_date = aggregated_features[["year", "month", "day", "hour", "minute"]].min().values
-    max_date = aggregated_features[["year", "month", "day", "hour", "minute"]].max().values
+    min_date = aggregated_features['date'].min()
+    max_date = aggregated_features['date'].max()
 
     # Converting to string 
-    min_date = '-'.join([str(x) for x in min_date])
-    max_date = '-'.join([str(x) for x in max_date])
+    min_date = min_date.strftime("%Y-%m-%d-%H-%M")
+    max_date = max_date.strftime("%Y-%m-%d-%H-%M")
+
+    # Dropping the date column
+    aggregated_features.drop(columns=["date"], inplace=True)
 
     # Creating the name for the blob for upload 
     feature_blob_name = f"{aggregated_feature_path}/{min_date}_{max_date}.parquet"
