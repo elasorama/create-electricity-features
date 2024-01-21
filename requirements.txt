@@ -5,3 +5,5 @@ tqdm==4.62.3
 pandas==2.1.4
 pyarrow==14.0.2
 azure-functions==1.18.0
+psycopg2-binary==2.9.9
+SQLAlchemy==2.0.25

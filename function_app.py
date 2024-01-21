@@ -1,8 +1,10 @@
 import logging
 import azure.functions as func
 
-# Importing the main function 
-from aggregate_features import main
+# Importing the main functions
+from aggregate_features import main as aggregate_features
+from aggregate_to_timeseries import main as aggregate_to_timeseries
+from aggregate_to_power_consumption import main as aggregate_to_power_consumption
 
 app = func.FunctionApp()
 
@@ -12,6 +14,8 @@ def timer_trigger_electricity(myTimer: func.TimerRequest) -> None:
     if myTimer.past_due:
         logging.info('The timer is past due!')
 
-    main(delta_hours=24)
+    aggregate_features(delta_hours=24)
+    aggregate_to_timeseries()
+    aggregate_to_power_consumption()
     logging.info('Python timer trigger function executed.')
     

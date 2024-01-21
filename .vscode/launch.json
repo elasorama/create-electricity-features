@@ -14,6 +14,20 @@
             "args": ["--delta_hours", "24"],
         },
         {
+            "name": "Create timeseries",
+            "type": "python",
+            "request": "launch",
+            "module": "aggregate_to_timeseries",
+            "justMyCode": true,
+        },
+        {
+            "name": "Create power consumption aggregates",
+            "type": "python",
+            "request": "launch",
+            "module": "aggregate_to_power_consumption",
+            "justMyCode": true,
+        },
+        {
             "name": "Attach to Python Functions",
             "type": "python",
             "request": "attach",
