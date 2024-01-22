@@ -5,6 +5,7 @@ import azure.functions as func
 from aggregate_features import main as aggregate_features
 from aggregate_to_timeseries import main as aggregate_to_timeseries
 from aggregate_to_power_consumption import main as aggregate_to_power_consumption
+from create_analysis_data import main as create_analysis_data
 
 app = func.FunctionApp()
 
@@ -17,5 +18,6 @@ def timer_trigger_electricity(myTimer: func.TimerRequest) -> None:
     aggregate_features(delta_hours=24)
     aggregate_to_timeseries()
     aggregate_to_power_consumption()
+    create_analysis_data()
     logging.info('Python timer trigger function executed.')
     
