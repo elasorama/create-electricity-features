@@ -65,7 +65,7 @@ def main():
     else:
         # Queryting the data from the power_consumption table
         df = pd.read_sql(f"SELECT * FROM power_consumption WHERE timestamp > '{max_timestamp}'", conn)
-        df_api = pd.read_sql(f"SELECT * FROM api_power_usage_analytics WHERE timestamp > '{max_timestamp}'", conn)
+        df_api = pd.read_sql(f"SELECT * FROM api_power_usage WHERE timestamp > '{max_timestamp}'", conn)
 
     # If the dataframes are empty, we return
     if df.empty or df_api.empty:
