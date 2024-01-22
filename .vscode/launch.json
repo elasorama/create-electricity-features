@@ -28,6 +28,13 @@
             "justMyCode": true,
         },
         {
+            "name": "Create power consumption analytics",
+            "type": "python",
+            "request": "launch",
+            "module": "create_analysis_data",
+            "justMyCode": true,
+        },
+        {
             "name": "Attach to Python Functions",
             "type": "python",
             "request": "attach",
