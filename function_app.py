@@ -16,8 +16,15 @@ def timer_trigger_electricity(myTimer: func.TimerRequest) -> None:
         logging.info('The timer is past due!')
 
     aggregate_features(delta_hours=24)
+    logging.info('Aggregate features executed.')
+    
     aggregate_to_timeseries()
+    logging.info('Aggregate to timeseries executed.')
+
     aggregate_to_power_consumption()
+    logging.info('Aggregate to power consumption executed.')
+
     create_analysis_data()
+    logging.info('Create analysis data executed.')
     logging.info('Python timer trigger function executed.')
     
